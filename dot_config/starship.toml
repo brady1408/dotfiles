@@ -1,0 +1,12 @@
+# Starship prompt config
+# Matches previous spaceship preferences: no battery, no newline, single line
+
+# Don't add a blank line between prompts
+add_newline = false
+
+# Single-line prompt
+[line_break]
+disabled = true
+
+[battery]
+disabled = true

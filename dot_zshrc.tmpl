@@ -5,13 +5,6 @@ export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/b
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-{{ if eq .chezmoi.os "darwin" -}}
-# Spaceship-promt custom
-export SPACESHIP_BATTERY_SHOW=false
-export SPACESHIP_PROMPT_ADD_NEWLINE=false
-export SPACESHIP_PROMPT_SEPARATE_LINE=false
-{{ end -}}
-
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -42,11 +35,8 @@ eval "$(rbenv init - zsh)"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-{{ if eq .chezmoi.os "darwin" -}}
-ZSH_THEME="spaceship"
-{{ else -}}
+# Starship overrides the theme, but set a fallback
 ZSH_THEME="robbyrussell"
-{{ end -}}
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -101,15 +91,8 @@ if [[ -f $ZSH/oh-my-zsh.sh ]]; then
   source $ZSH/oh-my-zsh.sh
 fi
 
-{{ if eq .chezmoi.os "darwin" -}}
-# Load spaceship theme (macOS/Homebrew)
-if [[ -f "/opt/homebrew/opt/spaceship/spaceship.zsh" ]]; then
-  source "/opt/homebrew/opt/spaceship/spaceship.zsh"
-fi
-{{ else -}}
-# Load starship prompt (Linux)
+# Starship prompt
 eval "$(starship init zsh)"
-{{ end -}}
 
 {{ if eq .chezmoi.os "linux" -}}
 # zsh-autosuggestions (Linux manual install)
