@@ -1,0 +1,20 @@
+[user]
+    name = Brady Cole
+    email = bcole@nav.com
+
+[alias]
+    main = !git stash && git checkout main && git fetch origin main && git reset --hard origin/main && git ocd
+    master = !git stash && git checkout master && git fetch origin master && git reset --hard origin/master && git ocd
+    ocd = !git gc --aggressive && git prune && git remote prune origin && git cleanup
+    cleanup = !git branch --merged | grep -v \"\\*\" | xargs -n 1 git branch -d > /dev/null 2>&1
+    publish = !git push --set-upstream origin $(git branch --show-current)
+    fb = !git add . && git commit -m \"bazel\"
+
+[url "git@git.nav.com:"]
+    insteadOf = https://git.nav.com/
+
+[url "git@github-work:bcole_navinc/"]
+    insteadOf = https://github.com/bcole_navinc/
+
+[url "git@github-work:nav-inc/"]
+    insteadOf = https://github.com/nav-inc/
