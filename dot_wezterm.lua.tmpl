@@ -1,0 +1,104 @@
+local wezterm = require 'wezterm'
+local config = wezterm.config_builder()
+local act = wezterm.action
+
+---------------------------------------------------------------------------
+-- Toggle background image
+---------------------------------------------------------------------------
+local bg_visible = true
+wezterm.on('toggle-background', function(window)
+  local overrides = window:get_config_overrides() or {}
+  if bg_visible then
+    overrides.background = {
+      { source = { Color = 'black' }, width = '100%', height = '100%' },
+    }
+  else
+    overrides.background = nil
+  end
+  bg_visible = not bg_visible
+  window:set_config_overrides(overrides)
+end)
+
+---------------------------------------------------------------------------
+-- Appearance
+---------------------------------------------------------------------------
+config.color_scheme = 'Catppuccin Mocha'
+config.font = wezterm.font('JetBrains Mono', { weight = 'Medium' })
+config.font_size = 14.0
+config.window_decorations = 'RESIZE'
+config.window_padding = { left = 8, right = 8, top = 8, bottom = 8 }
+config.inactive_pane_hsb = { saturation = 0.8, brightness = 0.7 }
+config.hyperlink_rules = wezterm.default_hyperlink_rules()
+config.background = {
+  {
+    source = { File = '{{ .chezmoi.homeDir }}/.config/wezterm/background.jpg' },
+    hsb = { brightness = 0.1 },
+    width = '100%',
+    height = '100%',
+  },
+}
+
+---------------------------------------------------------------------------
+-- Tab bar
+---------------------------------------------------------------------------
+config.use_fancy_tab_bar = false
+config.tab_bar_at_bottom = true
+config.hide_tab_bar_if_only_one_tab = true
+
+---------------------------------------------------------------------------
+-- Pane keybindings
+---------------------------------------------------------------------------
+config.keys = {
+  -- Splitting
+  { key = 'd', mods = 'CMD',       action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
+  { key = 'd', mods = 'CMD|SHIFT', action = act.SplitVertical   { domain = 'CurrentPaneDomain' } },
+
+  -- Navigate between panes
+  { key = 'LeftArrow',  mods = 'OPT', action = act.ActivatePaneDirection 'Left' },
+  { key = 'RightArrow', mods = 'OPT', action = act.ActivatePaneDirection 'Right' },
+  { key = 'UpArrow',    mods = 'OPT', action = act.ActivatePaneDirection 'Up' },
+  { key = 'DownArrow',  mods = 'OPT', action = act.ActivatePaneDirection 'Down' },
+
+  -- Resize panes
+  { key = 'LeftArrow',  mods = 'OPT|SHIFT', action = act.AdjustPaneSize { 'Left', 5 } },
+  { key = 'RightArrow', mods = 'OPT|SHIFT', action = act.AdjustPaneSize { 'Right', 5 } },
+  { key = 'UpArrow',    mods = 'OPT|SHIFT', action = act.AdjustPaneSize { 'Up', 3 } },
+  { key = 'DownArrow',  mods = 'OPT|SHIFT', action = act.AdjustPaneSize { 'Down', 3 } },
+
+  -- Zoom/unzoom current pane (toggle fullscreen for one pane)
+  { key = 'z', mods = 'CMD', action = act.TogglePaneZoomState },
+
+  -- Close current pane (with confirmation)
+  { key = 'w', mods = 'CMD', action = act.CloseCurrentPane { confirm = true } },
+
+  -- Rotate panes
+  { key = 'r', mods = 'CMD|SHIFT', action = act.RotatePanes 'Clockwise' },
+
+  -- Swap pane with another (enter selection mode)
+  { key = 's', mods = 'CMD|SHIFT', action = act.PaneSelect { mode = 'SwapWithActive' } },
+
+  -- Pick a pane by label
+  { key = 'p', mods = 'CMD|SHIFT', action = act.PaneSelect },
+
+  -- Tabs
+  { key = 't', mods = 'CMD', action = act.SpawnTab 'CurrentPaneDomain' },
+  { key = '1', mods = 'CMD', action = act.ActivateTab(0) },
+  { key = '2', mods = 'CMD', action = act.ActivateTab(1) },
+  { key = '3', mods = 'CMD', action = act.ActivateTab(2) },
+  { key = '4', mods = 'CMD', action = act.ActivateTab(3) },
+  { key = '5', mods = 'CMD', action = act.ActivateTab(4) },
+  { key = '6', mods = 'CMD', action = act.ActivateTab(5) },
+  { key = '7', mods = 'CMD', action = act.ActivateTab(6) },
+  { key = '8', mods = 'CMD', action = act.ActivateTab(7) },
+  { key = '9', mods = 'CMD', action = act.ActivateTab(-1) },
+  { key = 'Tab', mods = 'CTRL',       action = act.ActivateTabRelative(1) },
+  { key = 'Tab', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(-1) },
+
+  -- Toggle background image
+  { key = 'b', mods = 'CMD|SHIFT', action = act.EmitEvent 'toggle-background' },
+
+  -- Shift+Enter sends newline (for Claude Code)
+  { key = 'Enter', mods = 'SHIFT', action = act.SendString '\x1b[13;2u' },
+}
+
+return config
