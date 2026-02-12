@@ -122,6 +122,4 @@ export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
 eval "$(atuin init zsh)"
 
 export PATH="$HOME/.local/bin:$PATH"
-{{ if eq .chezmoi.os "darwin" -}}
 source ~/.navex.env
-{{ end -}}
