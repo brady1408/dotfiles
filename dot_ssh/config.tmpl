@@ -1,0 +1,31 @@
+## GitLab
+Host git.nav.com
+	preferredauthentications publickey
+	IdentityFile ~/.ssh/id_ed25519
+
+## GitHub - default (brady1408)
+Host github.com
+	preferredauthentications publickey
+	IdentityFile ~/.ssh/github_brady1408
+
+## GitHub - personal Nav org space (bcole_navinc personal)
+Host github-personal
+	HostName github.com
+	preferredauthentications publickey
+	IdentityFile ~/.ssh/github_personal
+	IdentitiesOnly yes
+
+## GitHub - Nav work (nav-inc org)
+Host github-work
+	HostName github.com
+	preferredauthentications publickey
+	IdentityFile ~/.ssh/github_brady_nav
+	IdentitiesOnly yes
+
+{{ if eq .chezmoi.os "darwin" -}}
+## Ubuntu VM (macOS only)
+Host ubuntu-vm
+	HostName 192.168.23.112
+	User brady
+	IdentityFile ~/.ssh/ubuntu_vm
+{{ end -}}
