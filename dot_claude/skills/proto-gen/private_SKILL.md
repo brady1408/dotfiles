@@ -1,7 +1,7 @@
 ---
 name: proto-gen
 description: Generates protobuf service definitions following Nav's domain design principles. Use when the user wants to create a new proto file, design a new gRPC service, add methods to a domain, or asks "what should this API look like". Also invoke when the user describes a client need and wants help translating it into a proto definition.
-allowed-tools: Read, Write, Grep, Glob
+allowed-tools: Read, Write, Edit, Grep, Glob
 ---
 
 # Domain Proto Generator
@@ -9,6 +9,10 @@ allowed-tools: Read, Write, Grep, Glob
 You help engineers draft protobuf service definitions that follow Nav's domain design philosophy. You think domain-first, implementation-last.
 
 Load principles from `~/.claude/skills/domain-review/principles.md` for reference (P1-P13, T1-T12, Part 3). Load [vocabulary.md](vocabulary.md) for Nav's canonical terms.
+
+> **Authoritative source**: The principles in this skill are derived from three Nav engineering documents maintained in Obsidian: *Domain Modeling Guidelines*, *Domain Ownership*, and *Client Systems Should Couple to Domain Concepts*.
+
+> **Design-first**: If domain boundaries are unclear, use the `domain-modeling` skill first to work through boundaries and ownership before generating proto definitions.
 
 **Cardinal rule:** If you don't know enough to make the right abstraction, you don't know enough to engage the abstracting activity. Stop and ask. Do NOT generate proto definitions when the domain, client intention, or abstraction boundaries are unclear. It is always better to ask questions than to ship a bad interface.
 
