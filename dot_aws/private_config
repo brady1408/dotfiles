@@ -1,0 +1,11 @@
+[default]
+region = us-east1
+[profile bcole_profile_github]
+sso_session = nav
+sso_account_id = 325685483689
+sso_role_name = sso_dev_Access
+region = us-west-2
+[sso-session nav]
+sso_start_url = https://d-926708d296.awsapps.com/start/#
+sso_region = us-west-2
+sso_registration_scopes = sso:account:access
